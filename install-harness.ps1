@@ -34,6 +34,12 @@ if (-not $?) {
     exit 1
 }
 
+# Pull latest changes to ensure we have the most recent version
+Write-Host "Pulling latest changes from GitHub..." -ForegroundColor Green
+Set-Location .cascade-harness
+git pull
+Set-Location ..
+
 # Create .windsurf/workflows if it doesn't exist
 if (-not (Test-Path ".windsurf")) {
     New-Item -ItemType Directory -Path ".windsurf" -Force | Out-Null
