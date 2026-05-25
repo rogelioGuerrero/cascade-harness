@@ -1,0 +1,172 @@
+---
+description: Verify Harness is ready and MCP servers are available
+---
+
+# Harness Check
+
+Workflow para verificar que el Harness está completamente configurado y listo para usar por Cascade.
+
+**Integración con Windsurf:**
+- Verifica MCP servers necesarios están activos
+- Verifica estructura de carpetas
+- Verifica workflows en .windsurf/workflows/
+- Cascade puede solicitar activación de MCP desactivados
+
+## Variables
+- None (automático)
+
+## 1) Verificar estructura de carpetas
+```powershell
+$ErrorActionPreference = 'Stop';
+Write-Host "=== HARNESS STRUCTURE CHECK ===";
+
+$requiredDirs = @(
+    ".cascade-harness\workflows",
+    ".cascade-harness\patterns",
+    ".cascade-harness\memory"
+);
+
+$allDirsExist = $true;
+foreach ($dir in $requiredDirs) {
+    if (Test-Path $dir) {
+        Write-Host "✓ $dir exists";
+    } else {
+        Write-Host "✗ $dir missing";
+        $allDirsExist = $false;
+    }
+}
+
+if (-not $allDirsExist) {
+    Write-Host "ERROR: Required directories missing. Please copy .cascade-harness/ to your project.";
+} else {
+    Write-Host "✓ All required directories exist";
+}
+```
+
+## 2) Verificar workflows en .windsurf/workflows/
+```powershell
+Write-Host "=== WORKFLOWS CHECK ===";
+
+$windsurfWorkflowsDir = ".windsurf\workflows";
+$harnessWorkflowsDir = ".cascade-harness\workflows";
+
+if (-not (Test-Path $windsurfWorkflowsDir)) {
+    Write-Host "✗ .windsurf/workflows/ does not exist";
+    Write-Host "ACTION: Copy workflows from .cascade-harness/workflows/ to .windsurf/workflows/";
+    Write-Host "Command: Copy-Item -Path .cascade-harness\workflows\* -Destination .windsurf\workflows\ -Recurse";
+} else {
+    $requiredWorkflows = @(
+        "harness-context.md",
+        "harness-task-start.md",
+        "harness-validate.md",
+        "harness-autocorrect.md",
+        "harness-learn.md",
+        "harness-recall.md"
+    );
+    
+    $missingWorkflows = @();
+    foreach ($wf in $requiredWorkflows) {
+        $wfPath = Join-Path $windsurfWorkflowsDir $wf;
+        if (Test-Path $wfPath) {
+            Write-Host "✓ $wf exists in .windsurf/workflows/";
+        } else {
+            Write-Host "✗ $wf missing from .windsurf/workflows/";
+            $missingWorkflows += $wf;
+        }
+    }
+    
+    if ($missingWorkflows.Count -gt 0) {
+        Write-Host "ACTION: Copy missing workflows from .cascade-harness/workflows/ to .windsurf/workflows/";
+        Write-Host "Command: Copy-Item -Path .cascade-harness\workflows\* -Destination .windsurf\workflows\ -Recurse";
+    } else {
+        Write-Host "✓ All required workflows exist in .windsurf/workflows/";
+    }
+}
+```
+
+## 3) Cascade: Verificar MCP servers disponibles
+Cascade debe verificar qué MCP servers de Windsurf están disponibles y activos:
+
+**MCP servers críticos (requeridos):**
+- `filesystem` - Acceso a archivos
+- `memory` - Persistencia de patrones
+- `sequential-thinking` - Razonamiento complejo
+
+**MCP servers opcionales:**
+- `playwright` - Pruebas E2E (solo si se necesitan)
+
+Cascade debe:
+1. Verificar si los MCP críticos están activos
+2. Si alguno está desactivado, informar al usuario
+3. Verificar si Playwright está disponible (opcional)
+
+## 4) Cascade: Reportar estado de MCP servers
+Cascade debe reportar:
+
+```
+=== MCP SERVERS CHECK ===
+✓ filesystem MCP - ACTIVE (required)
+✓ memory MCP - ACTIVE (required)
+✓ sequential-thinking MCP - ACTIVE (required)
+○ playwright MCP - INACTIVE (optional)
+```
+
+Si un MCP crítico está inactivo:
+```
+✗ filesystem MCP - INACTIVE (required)
+ACTION: Activate filesystem MCP in Windsurf configuration (~/.codeium/windsurf/mcp_config.json)
+```
+
+## 5) Verificar configuración de PowerShell (Windows)
+```powershell
+Write-Host "=== POWERSHELL CHECK ===";
+$executionPolicy = Get-ExecutionPolicy -Scope CurrentUser;
+if ($executionPolicy -eq "Restricted") {
+    Write-Host "✗ PowerShell execution policy is Restricted";
+    Write-Host "ACTION: Run: Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser";
+} else {
+    Write-Host "✓ PowerShell execution policy: $executionPolicy";
+}
+```
+
+## 6) Generar reporte de estado
+```powershell
+$checkReport = @{
+    timestamp = Get-Date -Format "o";
+    structure = $allDirsExist;
+    workflows = ($missingWorkflows.Count -eq 0);
+    mcpServers = $null; # Cascade debe llenar esto
+    powerShell = ($executionPolicy -ne "Restricted");
+    overall = $null; # Cascade debe llenar esto
+};
+
+New-Item -ItemType Directory -Path ".cascade-harness\memory\check-reports" -Force | Out-Null;
+$timestamp = Get-Date -Format "yyyyMMdd_HHmmss";
+$checkReport | ConvertTo-Json -Depth 10 | Out-File ".cascade-harness\memory\check-reports\check_$timestamp.json" -Encoding utf8;
+
+Write-Host "Check report saved to: .cascade-harness\memory\check-reports\check_$timestamp.json";
+```
+
+## 7) Cascade: Acciones recomendadas
+Si hay problemas, Cascade debe recomendar acciones específicas:
+
+**Si faltan workflows:**
+- Copiar workflows de .cascade-harness/workflows/ a .windsurf/workflows/
+
+**Si MCP crítico inactivo:**
+- Activar en ~/.codeium/windsurf/mcp_config.json
+- Reiniciar Windsurf
+
+**Si Playwright inactivo y se necesitan E2E:**
+- Activar Playwright MCP
+- Cascade puede solicitar: "Necesito ejecutar pruebas E2E. Por favor activa el MCP Playwright."
+
+**Si PowerShell restringido:**
+- Ejecutar: Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+## Resultado
+- Verificación completa de la estructura del Harness
+- Verificación de workflows en .windsurf/workflows/
+- Verificación de MCP servers activos
+- Acciones recomendadas si hay problemas
+- Cascade puede solicitar activación de MCP según necesidad

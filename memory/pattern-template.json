@@ -1,0 +1,33 @@
+{
+  "description": "Template for storing learned patterns",
+  "version": "1.0",
+  "structure": {
+    "id": "unique-pattern-id",
+    "domain": "authentication|api|database|testing|configuration|frontend|infrastructure|general",
+    "timestamp": "ISO-8601 timestamp",
+    "description": "Human-readable description of the pattern",
+    "context": {
+      "problem": "What problem this pattern solves",
+      "solution": "How the pattern solves it",
+      "stack": "Technology stack this pattern applies to"
+    },
+    "files": [
+      "path/to/file1",
+      "path/to/file2"
+    ],
+    "codeSnippets": [
+      {
+        "file": "path/to/file",
+        "language": "javascript|python|rust|go|etc",
+        "content": "code snippet",
+        "explanation": "Why this code works"
+      }
+    ],
+    "tags": ["tag1", "tag2"],
+    "successMetrics": {
+      "validationPassed": true,
+      "testsPassed": true,
+      "linterClean": true
+    }
+  }
+}
