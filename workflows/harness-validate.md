@@ -10,7 +10,6 @@ Workflow que ejecuta el loop de validación y autocorrección automática según
 - Usa comandos directos para linter (stack-aware)
 - Usa MCP Playwright para pruebas E2E
 - Usa MCP memory de Windsurf para persistencia
-- Cascade usa sequential-thinking MCP para análisis de fallos
 
 ## Variables
 - MaxRetries: Número máximo de intentos de autocorrección (default: 3)
@@ -169,16 +168,8 @@ Write-Host "Cascade: Use create_memory to store this validation report in Windsu
 Write-Host "Tags: harness, validation, report, quality";
 ```
 
-## 7) Cascade: Usar sequential-thinking para análisis
-Si hay fallos, Cascade debe usar MCP sequential-thinking para:
-- Analizar patrones en los errores
-- Identificar la causa raíz
-- Proponer estrategias de corrección
-- Priorizar correcciones por impacto
-
 ## Resultado
 - Ejecuta linter y tests unitarios automáticamente
 - Puede ejecutar pruebas E2E con Playwright MCP
 - Intenta auto-corregir errores de linting
 - Guarda reportes en memory local y MCP memory de Windsurf
-- Cascade usa sequential-thinking para análisis profundo de fallos

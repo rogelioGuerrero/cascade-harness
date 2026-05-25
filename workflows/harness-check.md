@@ -84,40 +84,21 @@ if (-not (Test-Path $windsurfWorkflowsDir)) {
 }
 ```
 
-## 3) Cascade: Verificar MCP servers disponibles
-Cascade debe verificar qué MCP servers de Windsurf están disponibles y activos:
+## 3) Verificar MCP servers (nota para usuario)
+Los MCP servers de Windsurf deben estar configurados manualmente en `~/.codeium/windsurf/mcp_config.json`.
 
 **MCP servers críticos (requeridos):**
 - `filesystem` - Acceso a archivos
 - `memory` - Persistencia de patrones
-- `sequential-thinking` - Razonamiento complejo
 
 **MCP servers opcionales:**
 - `playwright` - Pruebas E2E (solo si se necesitan)
+- `sequential-thinking` - Razonamiento complejo (opcional, puede causar bloqueos)
 
-Cascade debe:
-1. Verificar si los MCP críticos están activos
-2. Si alguno está desactivado, informar al usuario
-3. Verificar si Playwright está disponible (opcional)
+**Acción requerida:**
+Verifica que filesystem y memory estén activos en tu configuración de Windsurf. Si están inactivos, actívalos y reinicia Windsurf.
 
-## 4) Cascade: Reportar estado de MCP servers
-Cascade debe reportar:
-
-```
-=== MCP SERVERS CHECK ===
-✓ filesystem MCP - ACTIVE (required)
-✓ memory MCP - ACTIVE (required)
-✓ sequential-thinking MCP - ACTIVE (required)
-○ playwright MCP - INACTIVE (optional)
-```
-
-Si un MCP crítico está inactivo:
-```
-✗ filesystem MCP - INACTIVE (required)
-ACTION: Activate filesystem MCP in Windsurf configuration (~/.codeium/windsurf/mcp_config.json)
-```
-
-## 5) Verificar configuración de PowerShell (Windows)
+## 4) Verificar configuración de PowerShell (Windows)
 ```powershell
 Write-Host "=== POWERSHELL CHECK ===";
 $executionPolicy = Get-ExecutionPolicy -Scope CurrentUser;
@@ -129,15 +110,14 @@ if ($executionPolicy -eq "Restricted") {
 }
 ```
 
-## 6) Generar reporte de estado
+## 5) Generar reporte de estado
 ```powershell
 $checkReport = @{
     timestamp = Get-Date -Format "o";
     structure = $allDirsExist;
     workflows = ($missingWorkflows.Count -eq 0);
-    mcpServers = $null; # Cascade debe llenar esto
     powerShell = ($executionPolicy -ne "Restricted");
-    overall = $null; # Cascade debe llenar esto
+    overall = $allDirsExist -and ($missingWorkflows.Count -eq 0) -and ($executionPolicy -ne "Restricted");
 };
 
 New-Item -ItemType Directory -Path ".cascade-harness\memory\check-reports" -Force | Out-Null;
@@ -147,7 +127,7 @@ $checkReport | ConvertTo-Json -Depth 10 | Out-File ".cascade-harness\memory\chec
 Write-Host "Check report saved to: .cascade-harness\memory\check-reports\check_$timestamp.json";
 ```
 
-## 7) Cascade: Acciones recomendadas
+## 6) Acciones recomendadas
 Si hay problemas, Cascade debe recomendar acciones específicas:
 
 **Si faltan workflows:**

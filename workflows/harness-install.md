@@ -82,16 +82,7 @@ foreach ($dir in $requiredDirs) {
 Write-Host "✓ Required directories created";
 ```
 
-## 6) Cascade: Ejecutar verificación
-Cascade debe ejecutar `/harness-check` para verificar que todo está correctamente instalado.
-
-## 7) Cascade: Usar sequential-thinking para configuración
-Cascade debe usar MCP sequential-thinking para:
-- Verificar que los MCP servers necesarios están activos
-- Adaptar la configuración al stack del proyecto actual
-- Identificar cualquier configuración adicional necesaria
-
-## 8) Resultado
+## 6) Resultado
 ```powershell
 Write-Host "=== INSTALLATION COMPLETE ===";
 Write-Host "";

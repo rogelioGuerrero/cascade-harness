@@ -9,7 +9,6 @@ Captura el estado actual del proyecto para que Cascade entienda el contexto sin 
 **Integración con Windsurf:**
 - Usa MCP filesystem para acceso a archivos
 - Usa MCP memory de Windsurf para persistencia
-- Cascade puede usar sequential-thinking MCP para análisis complejo
 
 ## Variables
 - None (automático)
@@ -76,14 +75,7 @@ Write-Host "Cascade: Use create_memory to store this context in Windsurf memory"
 Write-Host "Tags: harness, context, snapshot, project-state";
 ```
 
-## 5) Cascade: Usar sequential-thinking para análisis
-Cascade debe usar MCP sequential-thinking para:
-- Analizar el contexto capturado
-- Identificar patrones en los archivos recientes
-- Inferir el propósito actual del proyecto
-- Detectar posibles problemas o áreas de mejora
-
 ## Resultado
 - Snapshot local en `memory/snapshots/`
 - Contexto persistente en MCP memory de Windsurf
-- Cascade tiene comprensión profunda del estado del proyecto
+- Cascade tiene comprensión del estado del proyecto
