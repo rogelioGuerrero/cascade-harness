@@ -12,13 +12,13 @@ Workflow para instalar el Cascade Engineering Harness desde GitHub en el proyect
 - Ejecuta /harness-check para verificar instalación
 
 ## Variables
-- GitHubRepo: URL del repositorio de GitHub (default: https://github.com/tu-usuario/cascade-harness.git)
+- GitHubRepo: URL del repositorio de GitHub (default: https://github.com/rogelioGuerrero/cascade-harness.git)
 - Force: Sobrescribir si ya existe (default: false)
 
 ## 1) Verificar si .cascade-harness ya existe
 ```powershell
 $ErrorActionPreference = 'Stop';
-$GitHubRepo = "https://github.com/tu-usuario/cascade-harness.git"; # Cambiar esto a tu repo real
+$GitHubRepo = "https://github.com/rogelioGuerrero/cascade-harness.git";
 
 if (Test-Path ".cascade-harness") {
     Write-Host ".cascade-harness already exists.";

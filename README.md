@@ -42,7 +42,7 @@ Este Harness implementa los 4 pilares de un Engineering Harness para transformar
 
 O descarga el script desde GitHub y ejecútalo:
 ```powershell
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/tu-usuario/cascade-harness/main/install-harness.ps1" -OutFile "install-harness.ps1"
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/rogelioGuerrero/cascade-harness/main/install-harness.ps1" -OutFile "install-harness.ps1"
 .\install-harness.ps1
 ```
 

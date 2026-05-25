@@ -12,7 +12,7 @@
 
 Or download and run from GitHub:
 ```powershell
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/tu-usuario/cascade-harness/main/install-harness.ps1" -OutFile "install-harness.ps1"
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/rogelioGuerrero/cascade-harness/main/install-harness.ps1" -OutFile "install-harness.ps1"
 .\install-harness.ps1
 ```
 

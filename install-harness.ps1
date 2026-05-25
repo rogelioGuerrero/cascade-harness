@@ -2,7 +2,7 @@
 # Run this script in any project to install the Harness from GitHub
 
 param(
-    [string]$GitHubRepo = "https://github.com/tu-usuario/cascade-harness.git",
+    [string]$GitHubRepo = "https://github.com/rogelioGuerrero/cascade-harness.git",
     [switch]$Force = $false
 )
 
