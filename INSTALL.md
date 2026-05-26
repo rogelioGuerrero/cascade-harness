@@ -18,7 +18,9 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/rogelioGuerrero/cascad
 
 2. **Restart Windsurf** to load the workflows
 
-3. **Run `/harness-check`** to verify installation
+3. **Run `/harness-setup`** to configure Cascade MEMORY[user_global] with Harness rules
+
+4. **Run `/harness-check`** to verify installation
 
 ### Option 2: Manual Installation
 
@@ -46,6 +48,10 @@ Check your Windsurf MCP configuration (`~/.codeium/windsurf/mcp_config.json`) to
 
 4. **Restart Windsurf** to load the workflows
 
+5. **Run `/harness-setup`** to configure Cascade MEMORY[user_global] with Harness rules
+
+6. **Run `/harness-check`** to verify installation
+
 ### Option 3: Install via Cascade Workflow
 
 Ask Cascade to execute `/harness-install` to install the Harness from GitHub automatically.
@@ -56,10 +62,11 @@ Ask Cascade to execute `/harness-install` to install the Harness from GitHub aut
 
 Test that the Harness is working:
 
-1. Run `/harness-check` to verify configuration and MCP servers
-2. Run `/harness-context` to capture project state
-3. Run `/harness-validate` to test validation loop
-4. Check that `.cascade-harness/memory/` contains snapshots
+1. Run `/harness-setup` to configure Cascade MEMORY[user_global]
+2. Run `/harness-check` to verify configuration and MCP servers
+3. Run `/harness-context` to capture project state
+4. Run `/harness-validate` to test validation loop
+5. Check that `.cascade-harness/memory/` contains snapshots
 
 ## Stack Support
 

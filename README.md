@@ -85,6 +85,7 @@ Ejemplos de uso:
 
 **Workflows disponibles:**
 - `/harness-install` - Instala el Harness desde GitHub en el proyecto actual
+- `/harness-setup` - Configura MEMORY[user_global] con reglas del Harness
 - `/harness-check` - Verifica que el Harness está configurado correctamente y MCP servers activos
 - `/harness-context` - Captura estado actual del proyecto usando MCP filesystem
 - `/harness-validate` - Ejecuta loop de validación con linter, tests y Playwright E2E
