@@ -39,8 +39,8 @@ cp -r .cascade-harness/workflows/* .windsurf/workflows/
 The Harness uses the MCP servers already configured in Windsurf:
 - `filesystem` - For file access
 - `memory` - For pattern persistence
-- `playwright` - For E2E testing
-- `sequential-thinking` - For complex reasoning
+- `playwright` - For E2E testing (optional)
+- `sequential-thinking` - For complex reasoning (optional)
 
 Check your Windsurf MCP configuration (`~/.codeium/windsurf/mcp_config.json`) to ensure these servers are enabled.
 
@@ -49,6 +49,8 @@ Check your Windsurf MCP configuration (`~/.codeium/windsurf/mcp_config.json`) to
 ### Option 3: Install via Cascade Workflow
 
 Ask Cascade to execute `/harness-install` to install the Harness from GitHub automatically.
+
+**Note:** The workflows are tools for you, not automation for Cascade. You invoke workflows manually and then pass the context to Cascade explicitly.
 
 ## Verification
 

@@ -1,5 +1,7 @@
 # Usage Guide
 
+**Important Note:** The workflows are tools for you, the developer. You invoke them manually and then pass the context to Cascade explicitly. Cascade does not automatically use the results of workflows - you must tell it to read the generated files or MCP memory entries.
+
 ## Core Workflows
 
 ### 1. Task Start - Begin any task with context

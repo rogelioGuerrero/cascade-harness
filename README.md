@@ -9,12 +9,14 @@ Harness agnóstico y reutilizable para mejorar la calidad de productos generados
 
 ## Filosofía
 
-Este Harness implementa los 4 pilares de un Engineering Harness para transformar Cascade en un agente de software confiable:
+Este Harness es un conjunto de herramientas y workflows para ti, el desarrollador, que te ayudan a:
 
-1. **Flow Awareness**: Captura contexto implícito del proyecto (archivos abiertos, comandos recientes, estado actual)
-2. **Tool Invocation**: Usa MCP servers de Windsurf para ejecutar acciones del proyecto
-3. **Fast Context Indexing**: Usa MCP filesystem de Windsurf para acceso rápido a archivos
-4. **Linter & Test Loop**: Autocorrección automática basada en validación con Playwright MCP
+1. **Flow Awareness**: Capturar contexto del proyecto (archivos, estado git, stack)
+2. **Tool Invocation**: Usar MCP servers de Windsurf para ejecutar acciones
+3. **Fast Context Indexing**: Acceso rápido a archivos relevantes
+4. **Linter & Test Loop**: Validación de código con linter y tests
+
+**Nota importante:** Los workflows son herramientas para ti, no automatización para Cascade. Cascade sigue su propia lógica de trabajo. Tú invocas los workflows manualmente y luego le pasas el contexto a Cascade explícitamente.
 
 ## Estructura
 
@@ -73,9 +75,15 @@ El Harness aprende patrones con el tiempo usando MCP memory de Windsurf:
 
 ## Uso
 
-Cascade detectará automáticamente la presencia de `.cascade-harness/` y usará sus workflows.
+Los workflows son herramientas que tú invocas manualmente. Después de ejecutar un workflow, puedes pasar el contexto a Cascade explícitamente.
 
-Ejemplos de comandos que Cascade usará:
+Ejemplos de uso:
+- **Tú:** "Ejecuta `/harness-context`" → Cascade captura el estado del proyecto
+- **Tú:** "Usa el contexto del snapshot para implementar X" → Cascade lee el contexto y trabaja
+- **Tú:** "Ejecuta `/harness-validate`" → Cascade ejecuta validación
+- **Tú:** "Ejecuta `/harness-learn` para guardar este patrón" → Cascade guarda el patrón
+
+**Workflows disponibles:**
 - `/harness-install` - Instala el Harness desde GitHub en el proyecto actual
 - `/harness-check` - Verifica que el Harness está configurado correctamente y MCP servers activos
 - `/harness-context` - Captura estado actual del proyecto usando MCP filesystem
