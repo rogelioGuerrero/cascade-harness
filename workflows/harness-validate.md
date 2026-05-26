@@ -156,11 +156,17 @@ New-Item -ItemType Directory -Path ".cascade-harness\memory\validation-reports" 
 $timestamp = Get-Date -Format "yyyyMMdd_HHmmss";
 $report | ConvertTo-Json -Depth 10 | Out-File ".cascade-harness\memory\validation-reports\report_$timestamp.json" -Encoding utf8;
 
-Write-Host "=== VALIDATION REPORT ===";
-Write-Host "Overall: $($report.overall)";
-Write-Host "Linter: $(if ($report.linter.hasErrors) { 'FAIL' } else { 'PASS' })";
-Write-Host "Unit Tests: $(if ($report.unitTests.ran) { if ($report.unitTests.passed) { 'PASS' } else { 'FAIL' } } else { 'SKIPPED' })";
-Write-Host "E2E Tests: $(if ($report.e2eTests.ran) { if ($report.e2eTests.passed) { 'PASS' } else { 'FAIL' } } else { 'SKIPPED' })";
+Write-Host "=== VALIDATION REPORT ===" -ForegroundColor Cyan;
+Write-Host "";
+Write-Host "┌─────────────────────────────────────┐";
+Write-Host "│         VALIDATION SUMMARY           │";
+Write-Host "├─────────────────────────────────────┤";
+Write-Host "│ Overall: $($report.overall)                      │";
+Write-Host "│ Linter: $(if ($report.linter.hasErrors) { 'FAIL' } else { 'PASS' })                         │";
+Write-Host "│ Unit Tests: $(if ($report.unitTests.ran) { if ($report.unitTests.passed) { 'PASS' } else { 'FAIL' } } else { 'SKIPPED' })                │";
+Write-Host "│ E2E Tests: $(if ($report.e2eTests.ran) { if ($report.e2eTests.passed) { 'PASS' } else { 'FAIL' } } else { 'SKIPPED' })                 │";
+Write-Host "└─────────────────────────────────────┘";
+Write-Host "";
 Write-Host "Local report saved to: .cascade-harness\memory\validation-reports\report_$timestamp.json";
 
 # Cascade debe guardar este reporte en MCP memory de Windsurf

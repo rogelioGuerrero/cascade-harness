@@ -75,7 +75,37 @@ Write-Host "Cascade: Use create_memory to store this context in Windsurf memory"
 Write-Host "Tags: harness, context, snapshot, project-state";
 ```
 
+## 6) Mostrar esquema ASCII del contexto
+```powershell
+Write-Host "";
+Write-Host "=== PROJECT CONTEXT SNAPSHOT ===" -ForegroundColor Cyan;
+Write-Host "";
+Write-Host "┌─────────────────────────────────────┐";
+Write-Host "│         GIT STATE                   │";
+Write-Host "├─────────────────────────────────────┤";
+Write-Host "│ Branch: $gitBranch                   │";
+Write-Host "│ Status: $gitStatus                  │";
+Write-Host "│ Recent: $gitLog                     │";
+Write-Host "└─────────────────────────────────────┘";
+Write-Host "";
+Write-Host "┌─────────────────────────────────────┐";
+Write-Host "│         PROJECT STACK                │";
+Write-Host "├─────────────────────────────────────┤";
+Write-Host "│ Detected: $($detectedStack -join ', ')  │";
+Write-Host "└─────────────────────────────────────┘";
+Write-Host "";
+Write-Host "┌─────────────────────────────────────┐";
+Write-Host "│         RECENT FILES                 │";
+Write-Host "├─────────────────────────────────────┤";
+Write-Host "│ Total: $($recentFiles.Count) files modified      │";
+Write-Host "└─────────────────────────────────────┘";
+Write-Host "";
+Write-Host "Snapshot saved to: $snapshotFile";
+Write-Host "Timestamp: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')";
+```
+
 ## Resultado
 - Snapshot local en `memory/snapshots/`
 - Contexto persistente en MCP memory de Windsurf
+- Esquema ASCII visual del estado del proyecto
 - Cascade tiene comprensión del estado del proyecto

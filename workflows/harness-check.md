@@ -124,6 +124,35 @@ New-Item -ItemType Directory -Path ".cascade-harness\memory\check-reports" -Forc
 $timestamp = Get-Date -Format "yyyyMMdd_HHmmss";
 $checkReport | ConvertTo-Json -Depth 10 | Out-File ".cascade-harness\memory\check-reports\check_$timestamp.json" -Encoding utf8;
 
+Write-Host "";
+Write-Host "=== HARNESS CHECK REPORT ===" -ForegroundColor Cyan;
+Write-Host "";
+Write-Host "┌─────────────────────────────────────┐";
+Write-Host "│         STRUCTURE                   │";
+Write-Host "├─────────────────────────────────────┤";
+Write-Host "│ Status: $(if ($allDirsExist) { '✓ OK' } else { '✗ FAIL' })                        │";
+Write-Host "└─────────────────────────────────────┘";
+Write-Host "";
+Write-Host "┌─────────────────────────────────────┐";
+Write-Host "│         WORKFLOWS                   │";
+Write-Host "├─────────────────────────────────────┤";
+Write-Host "│ Status: $(if ($missingWorkflows.Count -eq 0) { '✓ OK' } else { '✗ FAIL' })                        │";
+Write-Host "│ Missing: $($missingWorkflows.Count) workflows                │";
+Write-Host "└─────────────────────────────────────┘";
+Write-Host "";
+Write-Host "┌─────────────────────────────────────┐";
+Write-Host "│         POWERSHELL                  │";
+Write-Host "├─────────────────────────────────────┤";
+Write-Host "│ Policy: $executionPolicy                   │";
+Write-Host "│ Status: $(if ($executionPolicy -ne 'Restricted') { '✓ OK' } else { '✗ FAIL' })                        │";
+Write-Host "└─────────────────────────────────────┘";
+Write-Host "";
+Write-Host "┌─────────────────────────────────────┐";
+Write-Host "│         OVERALL                     │";
+Write-Host "├─────────────────────────────────────┤";
+Write-Host "│ Status: $(if ($checkReport.overall) { '✓ READY' } else { '✗ ISSUES' })                      │";
+Write-Host "└─────────────────────────────────────┘";
+Write-Host "";
 Write-Host "Check report saved to: .cascade-harness\memory\check-reports\check_$timestamp.json";
 ```
 

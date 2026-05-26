@@ -8,7 +8,6 @@ Workflow para documentar avances exitosos y lecciones aprendidas en PROGRESS.md.
 
 **Integración con Windsurf:**
 - Usa MCP filesystem para leer/escribir PROGRESS.md
-- Usa MCP sequential-thinking para analizar lecciones aprendidas
 - Complementa MCP memory con documentación narrativa project-specific
 
 ## Variables
@@ -50,11 +49,11 @@ if (-not (Test-Path $progressFile)) {
 ```
 
 ## 2) Cascade: Analizar la tarea completada
-Cascade debe usar MCP sequential-thinking para:
-- Analizar qué se implementó
-- Identificar lecciones aprendidas
-- Determinar qué componentes ahora funcionan
-- Extraer insights valiosos para futuras tareas
+Cascade debe analizar:
+- Qué se implementó
+- Lecciones aprendidas
+- Qué componentes ahora funcionan
+- Insights valiosos para futuras tareas
 
 ## 3) Leer PROGRESS.md actual
 ```powershell
@@ -127,7 +126,30 @@ Además de PROGRESS.md, Cascade debe guardar lecciones clave en MCP memory de Wi
 
 **Tags:** `harness, lesson, learned, $TaskType, project-specific`
 
-## 8) Cascade: Consultar PROGRESS.md para futuras tareas
+## 8) Mostrar esquema ASCII del progreso
+```powershell
+Write-Host "";
+Write-Host "=== PROGRESS UPDATE ===" -ForegroundColor Cyan;
+Write-Host "";
+Write-Host "┌─────────────────────────────────────┐";
+Write-Host "│         TASK COMPLETED              │";
+Write-Host "├─────────────────────────────────────┤";
+Write-Host "│ Type: $TaskType                        │";
+Write-Host "│ Description: $Description               │";
+Write-Host "│ Files: $Files                          │";
+Write-Host "└─────────────────────────────────────┘";
+Write-Host "";
+Write-Host "┌─────────────────────────────────────┐";
+Write-Host "│         PROGRESS FILE                │";
+Write-Host "├─────────────────────────────────────┤";
+Write-Host "│ Updated: PROGRESS.md                 │";
+Write-Host "│ Backup: $backupDir\progress_$timestamp.md │";
+Write-Host "└─────────────────────────────────────┘";
+Write-Host "";
+Write-Host "Timestamp: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')";
+```
+
+## 9) Cascade: Consultar PROGRESS.md para futuras tareas
 Cuando Cascade inicie una nueva tarea, debe:
 - Leer PROGRESS.md usando MCP filesystem
 - Identificar qué componentes ya funcionan
@@ -139,5 +161,6 @@ Cuando Cascade inicie una nueva tarea, debe:
 - PROGRESS.md actualizado con avances y lecciones
 - Backup local en memory/progress-backups/
 - Lecciones clave guardadas en MCP memory
+- Esquema ASCII visual del progreso
 - Cascade puede consultar PROGRESS.md para eficiencia futura
 - Historial narrativo del proyecto para desarrolladores
