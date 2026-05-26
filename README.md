@@ -16,6 +16,44 @@ Este Harness implementa los 4 pilares de un Engineering Harness para transformar
 3. **Fast Context Indexing**: Usa MCP filesystem de Windsurf para acceso rápido a archivos
 4. **Linter & Test Loop**: Autocorrección automática basada en validación con Playwright MCP
 
+## Estrategia de Dos Niveles (Two-Tier Strategy)
+
+El Harness utiliza una estrategia complementaria de dos niveles para maximizar la efectividad de Cascade:
+
+### Nivel 1: Reglas Globales (Gobierno del Comportamiento)
+- **Archivo:** `GLOBAL_RULES.md`
+- **Propósito:** Definir cómo Cascade debe pensar y actuar en TODOS los proyectos
+- **Configuración:** Windsurf Settings (Ctrl+, → Global Rules)
+- **Características:**
+  - Se aplican automáticamente sin invocación manual
+  - Define el ciclo de vida de 4 pasos: Context Filtering, Specification First, Test-Driven Execution, Compact Diffs
+  - Incluye las 3 leyes mentales: Console Loop, Definition of Done, Invisible Constraint Injection
+  - Agnóstico a lenguaje/framework
+
+### Nivel 2: Harness Workflows (Enfoque a la Acción)
+- **Directorio:** `workflows/`
+- **Propósito:** Proporcionar herramientas específicas para tareas complejas
+- **Uso:** Invocación manual con `/harness-*`
+- **Características:**
+  - Captura de contexto profundo
+  - Aprendizaje de patrones por dominio
+  - Validación E2E con Playwright
+  - Persistencia de conocimiento entre proyectos
+
+### Cómo Funcionan Juntos
+
+**Siempre activo:** Reglas globales (context filtering, tests, diffs compactos)
+
+**Cuando se necesita:** Harness workflows para:
+- Capturar contexto profundo de proyectos complejos
+- Aprender patrones específicos del dominio
+- Validar con E2E tests (Playwright)
+- Persistir conocimiento entre proyectos
+
+**Analogía:**
+- Reglas globales = Manual del piloto (cómo volar)
+- Harness workflows = Instrumentos de navegación (herramientas para vuelos complejos)
+
 ## Estructura
 
 ```

@@ -16,9 +16,24 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/rogelioGuerrero/cascad
 .\install-harness.ps1
 ```
 
-2. **Restart Windsurf** to load the workflows
+2. **Configure Global Rules (Critical Step)**
 
-3. **Run `/harness-check`** to verify installation
+The Harness uses a two-tier strategy. Before using workflows, configure the global rules that govern Cascade's behavior:
+
+- **Open Windsurf Settings:** Press `Ctrl` + `,` (or `Cmd` + `,` on Mac)
+- **Search for:** "Global Rules" or "Custom Instructions"
+- **Paste the content:** Copy the entire content of `GLOBAL_RULES.md` from this repository
+- **Save:** Apply the settings
+
+**Alternative if Ctrl+, doesn't work:**
+- Go to `File` → `Preferences` → `Settings`
+- Or press `Ctrl` + `Shift` + `P` and search for "Settings"
+
+**Why this matters:** Global rules define the 4-step execution lifecycle that Cascade must follow for ALL tasks. They are the "governance" layer that ensures quality across all projects.
+
+3. **Restart Windsurf** to load the workflows and global rules
+
+4. **Run `/harness-check`** to verify installation
 
 ### Option 2: Manual Installation
 
